@@ -3,3 +3,8 @@
 ################################################################################
 
 /bin/Debug/net45
+/.vs/Arcana/v15/Server/sqlite3
+/.vs/Arcana/v15
+/obj
+/.vs/config
+/Arcana.sln.DotSettings.user

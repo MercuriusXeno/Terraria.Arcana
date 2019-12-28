@@ -1,3 +1,4 @@
 displayName = Arcana
 author = Webmilio and MercuriusXeno
 version = 0.1
+modReferences = WebmilioCommons@0.1.9.7
