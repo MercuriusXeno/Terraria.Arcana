@@ -1,0 +1,3 @@
+displayName = Arcana
+author = Webmilio and MercuriusXeno
+version = 0.1
