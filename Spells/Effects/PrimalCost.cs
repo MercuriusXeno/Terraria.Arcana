@@ -12,7 +12,7 @@ namespace Arcana.Spells.Effects
         /// <summary>
         ///     Which element is the primal cost? "None" can be used to track the non-primal cost of a spell when it is cast (mana!)
         /// </summary>
-        public ElementalType Element { get; set; }
+        public Element Element { get; set; }
 
         /// <summary>
         ///     The cost in primals (or mana) of the effect or spell being crafted. Represented as a float for math purposes, but should be interacted with as a ceiling value

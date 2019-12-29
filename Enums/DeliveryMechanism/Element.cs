@@ -4,7 +4,7 @@
     ///     Class representing one of the many primal energy types the mod provides as well as the neutral or excepted "none" element, which would represent
     ///     either a neutral/non-elemental thing or an error state, depending on context.
     /// </summary>
-    public enum ElementalType
+    public enum Element
     {
         None = 0,
         Arcane = 1,

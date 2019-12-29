@@ -11,6 +11,12 @@ namespace Arcana.Spells
     /// </summary>
     public class DeliveryMechanism
     {
+        public DeliveryMechanism()
+        {
+            CascadeMechanisms = new List<DeliveryMechanism>();
+            Effects = new List<ArcaneEffect>();
+        }
+
         /// <summary>
         ///     The type of delivery mechanism, hard coded behavior that this mechanism adheres to.
         /// </summary>
@@ -22,14 +28,14 @@ namespace Arcana.Spells
         public Gravity Gravity { get; set; }
 
         /// <summary>
-        ///     Whether or not the projectile collides with solid tiles.
+        ///     Whether or not the projectile collides with solid tiles and collided entities.
         /// </summary>
-        public Corporeal TileCorporeal{ get; set; }
+        public Corporeal Corporeal{ get; set; }
 
         /// <summary>
-        ///     Whether or not the projectile collides with its target.
+        ///     How many entities the projectile or ray can pass through before coming to a dead stop.
         /// </summary>
-        public Corporeal TargetCorporeal { get; set; }
+        public int Piercing { get; set; }
 
         /// <summary>
         ///     A list of zero or more mechanisms that this mechanism subsequently triggers when it resolves on its target.
@@ -74,7 +80,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     How quickly the projectile travels, in pixels per update tick.
         /// </summary>
-        public float Velocity { get; set; }
+        public float Speed { get; set; }
 
         /// <summary>
         ///     How scaled-up the delivery mechanism "entity" is, determining its collision area
