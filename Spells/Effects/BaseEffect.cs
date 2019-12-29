@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arcana.Enums;
+using Arcana.Enums.DeliveryMechanism;
 
 namespace Arcana.Spells.Effects
 {
@@ -52,7 +53,7 @@ namespace Arcana.Spells.Effects
         /// <summary>
         ///     What type of effect this is.
         /// </summary>
-        public ArcaneEffectType ArcaneEffectType { get; set; }
+        public Effect ArcaneEffectType { get; set; }
 
         /// <summary>
         ///     A list of the elemental types of the effect, used to determine the primal affinity of the magic. Not to be confused with primal costs.

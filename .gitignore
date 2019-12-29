@@ -8,3 +8,4 @@
 /obj
 /.vs/config
 /Arcana.sln.DotSettings.user
+*.dtbcache

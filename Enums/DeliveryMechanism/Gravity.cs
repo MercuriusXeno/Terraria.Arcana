@@ -1,6 +1,6 @@
-﻿namespace Arcana.Enums
+﻿namespace Arcana.Enums.DeliveryMechanism
 {
-    public enum DeliveryMechanismGravity
+    public enum Gravity
     {
         NotApplicable = 0,
         Gravity = 1,

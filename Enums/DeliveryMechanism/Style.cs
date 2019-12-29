@@ -1,6 +1,6 @@
-﻿namespace Arcana.Enums
+﻿namespace Arcana.Enums.DeliveryMechanism
 {
-    public enum DeliveryMechanismType
+    public enum Style
     {
         RemoteIntervention = 0,
         Ray = 1,

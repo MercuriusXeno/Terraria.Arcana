@@ -1,4 +1,4 @@
-﻿namespace Arcana.Enums
+﻿namespace Arcana.Enums.DeliveryMechanism
 {
     /// <summary>
     ///     Class representing one of the many primal energy types the mod provides as well as the neutral or excepted "none" element, which would represent

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Arcana.Enums
+﻿namespace Arcana.Enums.DeliveryMechanism
 {
     /// <summary>
     ///     Enum representing the predefined types of arcane effects available to a player when crafting custom spells.
     /// </summary>
-    enum ArcaneEffectType
+    enum Effect
     {
         None = 0,
         Harm = 1,

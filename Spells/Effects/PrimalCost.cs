@@ -1,5 +1,6 @@
 ﻿using System;
 using Arcana.Enums;
+using Arcana.Enums.DeliveryMechanism;
 
 namespace Arcana.Spells.Effects
 {
