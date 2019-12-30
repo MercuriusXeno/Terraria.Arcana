@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Arcana.Enums.DeliveryMechanism;
 using Arcana.Spells.Effects;
-using Effect = Microsoft.Xna.Framework.Graphics.Effect;
 
 namespace Arcana.Spells
 {

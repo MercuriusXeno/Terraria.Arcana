@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Arcana.Enums;
 using Arcana.Enums.DeliveryMechanism;
 
 namespace Arcana.Spells
@@ -33,9 +32,18 @@ namespace Arcana.Spells
         public Corporeal Corporeal{ get; set; }
 
         /// <summary>
-        ///     How many entities the projectile or ray can pass through before coming to a dead stop.
+        ///     What kind of behavior does the collision resolve in:
+        ///     none (dissipates/dies natural death)
+        ///     bounce/ricochet
+        ///     pierce (keep traveling through enemies)
+        ///     linger (velocity lerps down and the mechanism lingers/continues firing resolvers on the target until it runs out)
         /// </summary>
-        public int Piercing { get; set; }
+        public CollisionBehavior CollisionBehavior { get; set; }
+
+        /// <summary>
+        ///     How many times the collision behavior fires before the mechanism needs to die. Eg. if it's piercing, how many times does it pierce? If it bounces, how many times?
+        /// </summary>
+        public int CollisionLimit { get; set; }
 
         /// <summary>
         ///     A list of zero or more mechanisms that this mechanism subsequently triggers when it resolves on its target.
@@ -114,5 +122,15 @@ namespace Arcana.Spells
         ///     Flag representing whether this is a root delivery mechanism or a cascade mechanism.
         /// </summary>
         public bool IsRootMechanism { get; set; }
+
+        /// <summary>
+        ///     The number of ticks the event or delivery mechanism should stay alive.
+        /// </summary>
+        public int Lifespan { get; set; }
+
+        /// <summary>
+        ///     The dust/visual representation of the mechanism, this is determined using the most powerful effect in the effect list.
+        /// </summary>
+        public int DominantDustType { get; set; }
     }
 }

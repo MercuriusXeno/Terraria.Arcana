@@ -3,7 +3,7 @@
     /// <summary>
     ///     Enum representing the predefined types of arcane effects available to a player when crafting custom spells.
     /// </summary>
-    enum Effect
+    public enum Effect
     {
         None = 0,
         Harm = 1,
