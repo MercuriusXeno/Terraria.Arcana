@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Spatial : IElement
+    public class Spatial : Element
     {
-        public string Name => Constants.Elements.Spatial;
+        public Spatial() : base(Constants.Elements.Spatial)
+        {
+        }
     }
 }

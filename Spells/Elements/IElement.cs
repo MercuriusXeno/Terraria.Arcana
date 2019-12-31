@@ -2,6 +2,9 @@
 {
     public interface IElement
     {
+        string GetDustName();
+
+
         string Name { get; }
     }
 }

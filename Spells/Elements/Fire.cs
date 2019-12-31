@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Fire : IElement
+    public class Fire : Element
     {
-        public string Name => Constants.Elements.Fire;
+        public Fire() : base(Constants.Elements.Fire)
+        {
+        }
     }
 }

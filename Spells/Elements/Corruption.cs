@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Corruption : IElement
+    public class Corruption : Element
     {
-        public string Name => Constants.Elements.Corruption;
+        public Corruption() : base(Constants.Elements.Corruption)
+        {
+        }
     }
 }

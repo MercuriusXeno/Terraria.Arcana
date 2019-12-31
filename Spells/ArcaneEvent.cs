@@ -116,26 +116,26 @@ namespace Arcana.Spells
         private void HandleDrawing()
         {
             // figure out based on velocity and time what portion of the event to draw
-            var isDoneDrawing = false;
-            var lerpVector = LastPosition;
+            bool isDoneDrawing = false;
+            Vector2 lerpVector = LastPosition;
             float lerpAmount = 0.0F;
             while (!isDoneDrawing)
             {
                 lerpAmount += 0.1F;
-                var currentDrawDistance = Vector2.Distance(Origin, lerpVector);
+                float currentDrawDistance = Vector2.Distance(Origin, lerpVector);
                 if (currentDrawDistance >= Distance)
                 {
                     isDoneDrawing = true;
                 }
                 lerpVector = Vector2.Lerp(LastPosition, Position, lerpAmount);
-                var dust = CreateDustForMechanism(lerpVector);
+                Dust dust = CreateDustForMechanism(lerpVector);
             }
         }
 
         private Dust CreateDustForMechanism(Vector2 position)
         {
-            var dust = GetDustFromDominantElement();
-            var result = Dust.NewDustPerfect(position, dust, Velocity, 0, default(Color), Mechanism.Scale);
+            int dust = GetDustFromDominantElement();
+            Dust result = Dust.NewDustPerfect(position, dust, Velocity, 0, default(Color), Mechanism.Scale);
             result.noGravity = Mechanism.Gravity != Gravity.Gravity;
             result.alpha = 50;
             return result;
@@ -143,16 +143,17 @@ namespace Arcana.Spells
 
         private int GetDustFromDominantElement()
         {
-            return Arcana.instance.DustType(GetDustNameFromDominantElement());
+            return ArcanaMod.Instance.DustType(GetDustNameFromDominantElement());
         }
 
         private string GetDustNameFromDominantElement()
         {
             IElement dominantElement = null;
-            var dominantFactor = float.MinValue;
-            foreach (var effect in Mechanism.Effects)
+            float dominantFactor = float.MinValue;
+            
+            foreach (ArcaneEffect effect in Mechanism.Effects)
             {
-                foreach (var element in effect.Elements)
+                foreach (KeyValuePair<IElement, float> element in effect.Elements)
                 {
                     if (element.Value > dominantFactor)
                     {

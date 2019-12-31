@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Neutral : IElement
+    public class Neutral : Element
     {
-        public string Name => Constants.Elements.Neutral;
+        public Neutral() : base(Constants.Elements.Neutral)
+        {
+        }
     }
 }

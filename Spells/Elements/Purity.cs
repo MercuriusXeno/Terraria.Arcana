@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Purity : IElement
+    public class Purity : Element
     {
-        public string Name => Constants.Elements.Purity;
+        public Purity() : base(Constants.Elements.Purity)
+        {
+        }
     }
 }

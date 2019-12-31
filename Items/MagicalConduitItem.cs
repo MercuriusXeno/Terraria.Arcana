@@ -46,7 +46,7 @@ namespace Arcana.Items
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(Arcana.instance);
+            var recipe = new ModRecipe(ArcanaMod.Instance);
             recipe.AddIngredient(ItemID.DirtBlock);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -14,7 +14,7 @@ namespace Arcana.Spells
             Duration = 0,
             Elements = new Dictionary<IElement, float>()
             {
-                [Registry.ElementRegistry[Constants.Elements.Fire]] = 1.0F
+                [ElementLoader.Instance.GetGeneric<Fire>()] = 1.0F
             },
             CorruptRatio = 0F,
             Effect = Effect.Harm,

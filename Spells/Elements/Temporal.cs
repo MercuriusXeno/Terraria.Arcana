@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Temporal : IElement
+    public class Temporal : Element
     {
-        public string Name => Constants.Elements.Temporal;
+        public Temporal() : base(Constants.Elements.Temporal)
+        {
+        }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Arcana.Spells.Elements
 {
-    public class Death : IElement
+    public class Death : Element
     {
-        public string Name => Constants.Elements.Death;
+        public Death() : base(Constants.Elements.Death)
+        {
+        }
     }
 }
