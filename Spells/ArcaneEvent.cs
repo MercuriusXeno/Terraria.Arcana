@@ -151,9 +151,9 @@ namespace Arcana.Spells
             IElement dominantElement = null;
             float dominantFactor = float.MinValue;
             
-            foreach (ArcaneEffect effect in Mechanism.Effects)
+            for (int i = 0; i < Mechanism.Effects.Count; i++)
             {
-                foreach (KeyValuePair<IElement, float> element in effect.Elements)
+                foreach (KeyValuePair<IElement, float> element in Mechanism.Effects[i].Elements)
                 {
                     if (element.Value > dominantFactor)
                     {
