@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Spells.DeliveryMechanisms;
 
 namespace Arcana.Spells
 {
@@ -19,7 +20,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     The type of delivery mechanism, hard coded behavior that this mechanism adheres to.
         /// </summary>
-        public Style MechanismType { get; set; }
+        public IDeliveryMechanism MechanismType { get; set; }
 
         /// <summary>
         ///     Whether the projectile obeys gravity
@@ -92,9 +93,8 @@ namespace Arcana.Spells
 
         /// <summary>
         ///     How scaled-up the delivery mechanism "entity" is, determining its collision area
-        ///     This is a size, in pixels, to make it a little more straightforward for players to tune the size of specific projectile styles.
         /// </summary>
-        public int Size { get; set; }
+        public float Scale { get; set; }
 
         /// <summary>
         ///     How long (in ticks) the player must charge the conduit in order to fire the mechanism.

@@ -1,8 +1,8 @@
 ﻿using System;
-using Arcana.Enums;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Spells.Elements;
 
-namespace Arcana.Spells.Effects
+namespace Arcana.Spells
 {
     /// <summary>
     ///     Class representing the primal cost(s) of a spell effect or the cost of crafting (they're completely alike in every respect, it's just an element and a value)
@@ -12,7 +12,7 @@ namespace Arcana.Spells.Effects
         /// <summary>
         ///     Which element is the primal cost? "None" can be used to track the non-primal cost of a spell when it is cast (mana!)
         /// </summary>
-        public Element Element { get; set; }
+        public IElement Element { get; set; }
 
         /// <summary>
         ///     The cost in primals (or mana) of the effect or spell being crafted. Represented as a float for math purposes, but should be interacted with as a ceiling value

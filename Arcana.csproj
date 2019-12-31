@@ -11,6 +11,11 @@
     <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define $(DefineConstants) -unsafe $(AllowUnsafeBlocks)" />
   </Target>
   <ItemGroup>
+    <Compile Remove="Dusts\ProjectileDust.cs" />
+    <Compile Remove="Dusts\PulseDust.cs" />
+    <Compile Remove="Dusts\RayDust.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="WebmilioCommons">
       <HintPath>..\WebmilioCommons-Releases\WebmilioCommons.dll</HintPath>
     </Reference>

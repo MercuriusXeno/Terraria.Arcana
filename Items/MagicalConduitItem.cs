@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Reference;
 using Arcana.Spells;
-using Arcana.Spells.Effects;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -35,8 +35,8 @@ namespace Arcana.Items
         {
             base.SetDefaults();
             item.useTime = 3;
-            item.useAnimation = 20;
-            item.useStyle = 5;
+            item.useAnimation = GetReferenceItem().useAnimation;
+            item.useStyle = GetReferenceItem().useStyle;
             item.noMelee = true;
             item.UseSound = SoundID.Item20;
             item.autoReuse = true;
@@ -67,17 +67,7 @@ namespace Arcana.Items
                 CascadeMechanisms = new List<DeliveryMechanism>(),
                 Effects = new List<ArcaneEffect>()
                 {
-                    new ArcaneEffect()
-                    {
-                        BaseCosts = new List<PrimalCost>(),
-                        Costs = new List<PrimalCost>(),
-                        Duration = 0,
-                        Elements = new Dictionary<Element, float>(),
-                        CorruptRatio = 0F,
-                        Effect = Effect.Harm,
-                        Power = 5,
-                        PrimalRatio = 0F
-                    }
+                    DebugPrefab.BasicFireDamage
                 },
                 CollisionBehavior = CollisionBehavior.None,
                 Target = Target.Enemy,
@@ -89,11 +79,11 @@ namespace Arcana.Items
                 Count = 1,
                 EffectDelay = 0,
                 IsRootMechanism = true,
-                MechanismType = Style.Projectile,
+                MechanismType = Registry.MechanismRegistry[Constants.DeliveryMechanisms.Projectile],
                 Repeat = 0,
                 RepeatDelay = 0,
-                Size = 12,
-                Speed = 10.0F,
+                Scale = 1.0F,
+                Speed = 60.0F,
                 Spread = 15.0F,
                 DominantDustType = 6
             };

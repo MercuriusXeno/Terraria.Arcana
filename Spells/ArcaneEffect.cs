@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Arcana.Enums.DeliveryMechanism;
-using Arcana.Spells.Effects;
+using Arcana.Spells.Elements;
 
 namespace Arcana.Spells
 {
@@ -12,7 +12,7 @@ namespace Arcana.Spells
     {
         public ArcaneEffect()
         {
-            Elements = new Dictionary<Element, float>();
+            Elements = new Dictionary<IElement, float>();
             BaseCosts = new List<PrimalCost>();
             Costs = new List<PrimalCost>();
         }
@@ -52,7 +52,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     The elements the effect contains as a dictionary of their ratio to the overall effect. This is used to determine scaling, the nature of the effect itself, and cost.
         /// </summary>
-        public Dictionary<Element, float> Elements { get; set; }
+        public Dictionary<IElement, float> Elements { get; set; }
 
         /// <summary>
         ///     The base cost of casting the effect as a function of its elements, its type, before its modifiers are applied.

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Spells.Elements;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Config.UI;
 
 namespace Arcana.Spells
 {
@@ -131,10 +134,36 @@ namespace Arcana.Spells
 
         private Dust CreateDustForMechanism(Vector2 position)
         {
-            var result = Dust.NewDustPerfect(position, Mechanism.DominantDustType, Velocity, 0, default(Color),
-                Mechanism.Size);
+            var dust = GetDustFromDominantElement();
+            var result = Dust.NewDustPerfect(position, dust, Velocity, 0, default(Color), Mechanism.Scale);
             result.noGravity = Mechanism.Gravity != Gravity.Gravity;
+            result.alpha = 50;
             return result;
+        }
+
+        private int GetDustFromDominantElement()
+        {
+            return Arcana.instance.DustType(GetDustNameFromDominantElement());
+        }
+
+        private string GetDustNameFromDominantElement()
+        {
+            IElement dominantElement = null;
+            var dominantFactor = float.MinValue;
+            foreach (var effect in Mechanism.Effects)
+            {
+                foreach (var element in effect.Elements)
+                {
+                    if (element.Value > dominantFactor)
+                    {
+                        dominantFactor = element.Value;
+                        dominantElement = element.Key;
+                    }
+                }
+            }
+
+            
+            return dominantElement?.GetDustName();
         }
     }
 }
