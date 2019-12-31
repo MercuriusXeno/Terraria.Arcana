@@ -4,13 +4,13 @@
     {
         protected Element(string name)
         {
-            Name = name;
+            UnlocalizedName = name;
         }
 
 
-        public virtual string GetDustName() => $"{Name}Dust";
+        public virtual string GetDustName() => $"{UnlocalizedName}Dust";
 
 
-        public string Name { get; }
+        public string UnlocalizedName { get; }
     }
 }

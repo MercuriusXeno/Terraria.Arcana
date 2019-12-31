@@ -20,7 +20,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     The type of delivery mechanism, hard coded behavior that this mechanism adheres to.
         /// </summary>
-        public IDeliveryMechanism MechanismType { get; set; }
+        public IDeliveryMechanismType MechanismTypeType { get; set; }
 
         /// <summary>
         ///     Whether the projectile obeys gravity

@@ -2,15 +2,18 @@
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
-    public class Pulse : IDeliveryMechanism
+    public class Pulse : DeliveryMechanismType
     {
-        public string Name => Constants.DeliveryMechanisms.Pulse;
-
-        public void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public Pulse() : base(Constants.DeliveryMechanisms.Pulse)
         {
         }
 
-        public void Process(ArcaneEvent arcaneEvent)
+
+        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        {
+        }
+
+        public override void Process(ArcaneEvent arcaneEvent)
         {
         }
     }

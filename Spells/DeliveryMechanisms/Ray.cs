@@ -2,15 +2,18 @@
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
-    public class Ray : IDeliveryMechanism
+    public class Ray : DeliveryMechanismType
     {
-        public string Name => Constants.DeliveryMechanisms.Ray;
-
-        public void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public Ray() : base(Constants.DeliveryMechanisms.Ray)
         {
         }
 
-        public void Process(ArcaneEvent arcaneEvent)
+
+        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        {
+        }
+
+        public override void Process(ArcaneEvent arcaneEvent)
         {
         }
     }

@@ -2,15 +2,18 @@
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
-    public class Projectile : IDeliveryMechanism
+    public class Projectile : DeliveryMechanismType
     {
-        public string Name => Constants.DeliveryMechanisms.Projectile;
-
-        public void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public Projectile() : base(Constants.DeliveryMechanisms.Projectile)
         {
         }
 
-        public void Process(ArcaneEvent arcaneEvent)
+
+        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        {
+        }
+
+        public override void Process(ArcaneEvent arcaneEvent)
         {
         }
     }

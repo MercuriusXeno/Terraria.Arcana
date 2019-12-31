@@ -1,10 +1,10 @@
-﻿namespace Arcana.Spells.Elements
+﻿using Arcana.Commons;
+using WebmilioCommons.Managers;
+
+namespace Arcana.Spells.Elements
 {
-    public interface IElement
+    public interface IElement : IHasUnlocalizedName
     {
         string GetDustName();
-
-
-        string Name { get; }
     }
 }

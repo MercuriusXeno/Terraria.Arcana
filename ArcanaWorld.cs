@@ -37,7 +37,7 @@ namespace Arcana
 
         private void Update()
         {
-            foreach (var arcaneEvent in _arcaneEvents)
+            foreach (ArcaneEvent arcaneEvent in _arcaneEvents)
             {
                 arcaneEvent.Update();
             }

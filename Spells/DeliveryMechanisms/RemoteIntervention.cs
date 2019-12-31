@@ -2,15 +2,18 @@
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
-    public class RemoteIntervention : IDeliveryMechanism
+    public class RemoteIntervention : DeliveryMechanismType
     {
-        public string Name => Constants.DeliveryMechanisms.RemoteIntervention;
-
-        public void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public RemoteIntervention() : base(Constants.DeliveryMechanisms.RemoteIntervention)
         {
         }
 
-        public void Process(ArcaneEvent arcaneEvent)
+
+        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        {
+        }
+
+        public override void Process(ArcaneEvent arcaneEvent)
         {
         }
     }

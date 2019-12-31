@@ -2,11 +2,14 @@
 using Arcana.Enums.DeliveryMechanism;
 using Arcana.Reference;
 using Arcana.Spells;
+using Arcana.Spells.DeliveryMechanisms;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using WebmilioCommons.Items.Standard;
+using Projectile = Arcana.Spells.DeliveryMechanisms.Projectile;
 
 namespace Arcana.Items
 {
@@ -18,7 +21,7 @@ namespace Arcana.Items
         private static readonly Item _referenceItem = GetReferenceItem();
         private static Item GetReferenceItem()
         {
-            var refItem = new Item();
+            Item refItem = new Item();
             refItem.netDefaults(REFERENCE_ITEM_ID);
             return refItem;
         } 
@@ -46,7 +49,7 @@ namespace Arcana.Items
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(ArcanaMod.Instance);
+            ModRecipe recipe = new ModRecipe(ArcanaMod.Instance);
             recipe.AddIngredient(ItemID.DirtBlock);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -60,7 +63,7 @@ namespace Arcana.Items
 
         public override bool UseItem(Player player)
         {
-            var deliveryMechanism = new DeliveryMechanism()
+            DeliveryMechanism deliveryMechanism = new DeliveryMechanism()
             {
                 Corporeal = Corporeal.Corporeal,
                 CascadeDelay = 2,
@@ -79,7 +82,7 @@ namespace Arcana.Items
                 Count = 1,
                 EffectDelay = 0,
                 IsRootMechanism = true,
-                MechanismType = Registry.MechanismRegistry[Constants.DeliveryMechanisms.Projectile],
+                MechanismTypeType = DeliveryMechanismTypeLoader.Instance.GetGeneric<Projectile>(),
                 Repeat = 0,
                 RepeatDelay = 0,
                 Scale = 1.0F,
@@ -87,10 +90,10 @@ namespace Arcana.Items
                 Spread = 15.0F,
                 DominantDustType = 6
             };
-            var velocity = (Main.MouseWorld - player.Center);
+            Vector2 velocity = (Main.MouseWorld - player.Center);
             velocity.Normalize();
-            var arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, velocity);
-            var world = ModContent.GetInstance<ArcanaWorld>();
+            ArcaneEvent arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, velocity);
+            ArcanaWorld world = ModContent.GetInstance<ArcanaWorld>();
             world.AddArcaneEvent(arcaneEvent);
             return base.UseItem(player);
         }
