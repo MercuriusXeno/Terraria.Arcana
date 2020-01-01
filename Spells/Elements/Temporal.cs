@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Temporal : Element
     {
-        public Temporal() : base(Constants.Elements.Temporal)
+        public Temporal() : base(Constants.Elements.TEMPORAL)
         {
         }
     }

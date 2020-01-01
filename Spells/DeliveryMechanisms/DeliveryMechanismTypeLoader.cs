@@ -3,7 +3,7 @@ using WebmilioCommons.Loaders;
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
-    public sealed class DeliveryMechanismTypeLoader : NamedSingletonLoader<DeliveryMechanismTypeLoader, IDeliveryMechanismType>
+    public sealed class DeliveryMechanismTypeLoader : NamedSingletonLoader<DeliveryMechanismTypeLoader, DeliveryMechanismType>
     {
         
     }

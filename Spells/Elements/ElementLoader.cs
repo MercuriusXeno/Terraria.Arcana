@@ -6,7 +6,7 @@ using WebmilioCommons.Loaders;
 
 namespace Arcana.Spells.Elements
 {
-    public sealed class ElementLoader : NamedSingletonLoader<ElementLoader, IElement>
+    public sealed class ElementLoader : NamedSingletonLoader<ElementLoader, Element>
     {
     }
 }

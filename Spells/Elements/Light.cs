@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Light : Element
     {
-        public Light() : base(Constants.Elements.Light)
+        public Light() : base(Constants.Elements.LIGHT)
         {
         }
     }

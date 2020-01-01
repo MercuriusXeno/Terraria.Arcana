@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Arcana.Spells;
+using Arcana.Spells.Elements;
 using Terraria.ModLoader;
 
 namespace Arcana

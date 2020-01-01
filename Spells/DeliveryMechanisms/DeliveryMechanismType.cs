@@ -8,10 +8,9 @@
         }
 
 
-        public abstract void HandleDrawingDust(ArcaneEvent arcaneEvent);
+        public abstract void HandleDrawing(ArcaneEvent arcaneEvent);
 
         public abstract void Process(ArcaneEvent arcaneEvent);
-
 
         public string UnlocalizedName { get; }
     }

@@ -19,13 +19,13 @@ namespace Arcana.Spells
     /// </summary>
     public class ArcaneEvent
     {
-        public ArcaneEvent(DeliveryMechanism mechanism, Vector2 origin, Vector2 velocity)
+        public ArcaneEvent(DeliveryMechanism mechanism, Vector2 origin, Vector2 vector)
         {
             Mechanism = mechanism;
             TicksElapsed = 0;
             LastTicksElapsed = 0;
             Origin = origin;
-            Velocity = velocity;
+            Vector = vector;
             ResolvingTicks = 0;
             CollisionsRemaining = mechanism.CollisionLimit;
         }
@@ -70,9 +70,14 @@ namespace Arcana.Spells
         public Vector2 Origin { get; set; }
 
         /// <summary>
-        ///     How fast this mechanism is moving (and its bearing), not to be confused with its speed.
+        ///     The direction the projectile is traveling, used to obtain its velocity.
         /// </summary>
-        public Vector2 Velocity { get; set; }
+        public Vector2 Vector { get; set; }
+
+        /// <summary>
+        ///     How fast this mechanism is moving (and its bearing), not to be confused with its speed or vector.
+        /// </summary>
+        public Vector2 Velocity => Vector * Mechanism.Speed;
 
         /// <summary>
         ///     How many ticks the event has spent resolving, after it collides or resolves otherwise.
@@ -103,68 +108,30 @@ namespace Arcana.Spells
             TicksElapsed++;
             HandleDrawing();
 
-            HandleCollision();
+            ProcessMechanism();
 
             LastTicksElapsed = TicksElapsed;
         }
 
-        private void HandleCollision()
+        private void ProcessMechanism()
         {
-            
+            Mechanism.MechanismType.Process(this);
+
         }
 
         private void HandleDrawing()
         {
-            // figure out based on velocity and time what portion of the event to draw
-            bool isDoneDrawing = false;
-            Vector2 lerpVector = LastPosition;
-            float lerpAmount = 0.0F;
-            while (!isDoneDrawing)
-            {
-                lerpAmount += 0.1F;
-                float currentDrawDistance = Vector2.Distance(Origin, lerpVector);
-                if (currentDrawDistance >= Distance)
-                {
-                    isDoneDrawing = true;
-                }
-                lerpVector = Vector2.Lerp(LastPosition, Position, lerpAmount);
-                Dust dust = CreateDustForMechanism(lerpVector);
-            }
+            Mechanism.MechanismType.HandleDrawing(this);
         }
 
-        private Dust CreateDustForMechanism(Vector2 position)
-        {
-            int dust = GetDustFromDominantElement();
-            Dust result = Dust.NewDustPerfect(position, dust, Velocity, 0, default(Color), Mechanism.Scale);
-            result.noGravity = Mechanism.Gravity != Gravity.Gravity;
-            result.alpha = 50;
-            return result;
-        }
-
-        private int GetDustFromDominantElement()
+        public int GetDustFromDominantElement()
         {
             return ArcanaMod.Instance.DustType(GetDustNameFromDominantElement());
         }
 
-        private string GetDustNameFromDominantElement()
+        public string GetDustNameFromDominantElement()
         {
-            IElement dominantElement = null;
-            float dominantFactor = float.MinValue;
-            
-            for (int i = 0; i < Mechanism.Effects.Count; i++)
-            {
-                foreach (KeyValuePair<IElement, float> element in Mechanism.Effects[i].Elements)
-                {
-                    if (element.Value > dominantFactor)
-                    {
-                        dominantFactor = element.Value;
-                        dominantElement = element.Key;
-                    }
-                }
-            }
-
-            
-            return dominantElement?.GetDustName();
+            return Mechanism.GetDominantElement().GetDustName();
         }
     }
 }

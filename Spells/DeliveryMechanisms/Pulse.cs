@@ -4,12 +4,12 @@ namespace Arcana.Spells.DeliveryMechanisms
 {
     public class Pulse : DeliveryMechanismType
     {
-        public Pulse() : base(Constants.DeliveryMechanisms.Pulse)
+        public Pulse() : base(Constants.DeliveryMechanisms.PULSE)
         {
         }
 
 
-        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public override void HandleDrawing(ArcaneEvent arcaneEvent)
         {
         }
 

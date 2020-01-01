@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Lightning : Element
     {
-        public Lightning() : base(Constants.Elements.Lightning)
+        public Lightning() : base(Constants.Elements.LIGHTNING)
         {
         }
     }

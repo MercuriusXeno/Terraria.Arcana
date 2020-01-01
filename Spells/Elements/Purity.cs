@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Purity : Element
     {
-        public Purity() : base(Constants.Elements.Purity)
+        public Purity() : base(Constants.Elements.PURITY)
         {
         }
     }

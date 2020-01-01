@@ -3,12 +3,7 @@ using Terraria.ModLoader;
 
 namespace Arcana.Dusts
 {
-    public class LightningDust : ModDust
+    public class LightningDust : BaseDust
     {
-        public override bool Update(Dust dust)
-        {
-            dust.position += dust.velocity;
-            return false;
-        }
     }
 }

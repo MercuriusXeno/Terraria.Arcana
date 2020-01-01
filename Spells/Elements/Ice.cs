@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Ice : Element
     {
-        public Ice() : base(Constants.Elements.Ice)
+        public Ice() : base(Constants.Elements.ICE)
         {
         }
     }

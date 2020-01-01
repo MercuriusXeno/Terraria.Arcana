@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using Arcana.Enums.DeliveryMechanism;
-using Arcana.Reference;
+﻿using Arcana.Reference;
 using Arcana.Spells;
-using Arcana.Spells.DeliveryMechanisms;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using WebmilioCommons.Items.Standard;
-using Projectile = Arcana.Spells.DeliveryMechanisms.Projectile;
 
 namespace Arcana.Items
 {
@@ -26,7 +21,7 @@ namespace Arcana.Items
             return refItem;
         } 
 
-        public MagicalConduitItem() : this("Magical Conduit", "This is a test conduit.", _referenceItem)
+        public MagicalConduitItem() : this(Constants.Items.MAGICAL_CONDUIT, Constants.ItemDescriptions.MAGICAL_CONDUIT, _referenceItem)
         {
         }
 
@@ -37,15 +32,15 @@ namespace Arcana.Items
         public override void SetDefaults()
         {
             base.SetDefaults();
-            item.useTime = 3;
+            item.useTime = 1;
             item.useAnimation = GetReferenceItem().useAnimation;
             item.useStyle = GetReferenceItem().useStyle;
             item.noMelee = true;
             item.UseSound = SoundID.Item20;
-            item.autoReuse = true;
+            item.autoReuse = false;
         }
 
-        public override string Texture => $"Terraria/Item_{REFERENCE_ITEM_ID}";
+        public override string Texture => $"{Constants.TERRARIA_ITEM_PREFIX}{REFERENCE_ITEM_ID}";
 
         public override void AddRecipes()
         {
@@ -63,36 +58,10 @@ namespace Arcana.Items
 
         public override bool UseItem(Player player)
         {
-            DeliveryMechanism deliveryMechanism = new DeliveryMechanism()
-            {
-                Corporeal = Corporeal.Corporeal,
-                CascadeDelay = 2,
-                CascadeMechanisms = new List<DeliveryMechanism>(),
-                Effects = new List<ArcaneEffect>()
-                {
-                    DebugPrefab.BasicFireDamage
-                },
-                CollisionBehavior = CollisionBehavior.None,
-                Target = Target.Enemy,
-                Gravity = Gravity.NoGravity,
-                Seeking = Seeking.None,
-                ChargeTime = 0,
-                CollisionLimit = 1,
-                Cooldown = 5,
-                Count = 1,
-                EffectDelay = 0,
-                IsRootMechanism = true,
-                MechanismTypeType = DeliveryMechanismTypeLoader.Instance.GetGeneric<Projectile>(),
-                Repeat = 0,
-                RepeatDelay = 0,
-                Scale = 1.0F,
-                Speed = 60.0F,
-                Spread = 15.0F,
-                DominantDustType = 6
-            };
-            Vector2 velocity = (Main.MouseWorld - player.Center);
-            velocity.Normalize();
-            ArcaneEvent arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, velocity);
+            DeliveryMechanism deliveryMechanism = DebugPrefab.BasicFireProjectile;
+            Vector2 bearing = (Main.MouseWorld - player.Center);
+            bearing.Normalize();
+            ArcaneEvent arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, bearing);
             ArcanaWorld world = ModContent.GetInstance<ArcanaWorld>();
             world.AddArcaneEvent(arcaneEvent);
             return base.UseItem(player);

@@ -4,12 +4,12 @@ namespace Arcana.Spells.DeliveryMechanisms
 {
     public class Ray : DeliveryMechanismType
     {
-        public Ray() : base(Constants.DeliveryMechanisms.Ray)
+        public Ray() : base(Constants.DeliveryMechanisms.RAY)
         {
         }
 
 
-        public override void HandleDrawingDust(ArcaneEvent arcaneEvent)
+        public override void HandleDrawing(ArcaneEvent arcaneEvent)
         {
         }
 

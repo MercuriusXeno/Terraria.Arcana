@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Arcana.Enums.DeliveryMechanism;
 using Arcana.Spells.DeliveryMechanisms;
+using Arcana.Spells.Elements;
 
 namespace Arcana.Spells
 {
@@ -20,7 +22,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     The type of delivery mechanism, hard coded behavior that this mechanism adheres to.
         /// </summary>
-        public IDeliveryMechanismType MechanismTypeType { get; set; }
+        public IDeliveryMechanismType MechanismType { get; set; }
 
         /// <summary>
         ///     Whether the projectile obeys gravity
@@ -132,5 +134,18 @@ namespace Arcana.Spells
         ///     The dust/visual representation of the mechanism, this is determined using the most powerful effect in the effect list.
         /// </summary>
         public int DominantDustType { get; set; }
+
+        /// <summary>
+        ///     Helper method of a mechanism returns the strongest weight of all its effects elements to determine visualization.
+        /// </summary>
+        public IElement GetDominantElement()
+        {
+            return Effects
+                .SelectMany(e => e.Elements)
+                .GroupBy(e => e.Key)
+                .Select(g => new ElementWeight(g.Key, g.Sum(e => e.Value)))
+                .OrderByDescending(e => e.Weight)
+                .FirstOrDefault()?.Element;
+        }
     }
 }

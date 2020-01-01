@@ -1,6 +1,8 @@
-﻿namespace Arcana.Spells.Elements
+﻿using Arcana.Reference;
+
+namespace Arcana.Spells.Elements
 {
-    public  abstract class Element : IElement
+    public abstract class Element : IElement
     {
         protected Element(string name)
         {
@@ -8,7 +10,7 @@
         }
 
 
-        public virtual string GetDustName() => $"{UnlocalizedName}Dust";
+        public virtual string GetDustName() => $"{UnlocalizedName}{Constants.DUST}";
 
 
         public string UnlocalizedName { get; }

@@ -4,7 +4,7 @@ namespace Arcana.Spells.Elements
 {
     public class Spatial : Element
     {
-        public Spatial() : base(Constants.Elements.Spatial)
+        public Spatial() : base(Constants.Elements.SPATIAL)
         {
         }
     }
