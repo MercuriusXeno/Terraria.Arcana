@@ -13,7 +13,7 @@ namespace Arcana.Spells
             BaseCosts = new List<PrimalCost>(),
             Costs = new List<PrimalCost>(),
             Duration = 0,
-            Elements = new Dictionary<IElement, float>()
+            Elements = new Dictionary<Element, float>()
             {
                 [ElementLoader.Instance.GetGeneric<Fire>()] = 1.0F
             },

@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Reference;
 using Arcana.Spells.DeliveryMechanisms;
 using Arcana.Spells.Elements;
+using Terraria.ModLoader.IO;
 
 namespace Arcana.Spells
 {
@@ -11,12 +14,114 @@ namespace Arcana.Spells
     ///     The delivery mechanism can have one or more cascade mechanisms (self referential in a sense)
     ///     as well as effects. The topmost delivery mechanism is used to determine the cost of the spell being cast.
     /// </summary>
-    public class DeliveryMechanism
+    public class DeliveryMechanism : TagSerializable
     {
+        public static readonly Func<TagCompound, DeliveryMechanism> DESERIALIZER = Load;
+
         public DeliveryMechanism()
         {
             CascadeMechanisms = new List<DeliveryMechanism>();
             Effects = new List<ArcaneEffect>();
+        }
+
+        public DeliveryMechanism(DeliveryMechanismType mechanismType, Gravity gravity, Corporeal corporeal, CollisionBehavior collisionBehavior, int collisionLimit,
+            List<DeliveryMechanism> cascadeMechanisms, List<ArcaneEffect> effects, Target target, Seeking seeking, int count, int repeat, int repeatDelay,
+            float spread, float speed, float scale, int chargeTime, int cascadeDelay, int effectDelay, int cooldown, bool isRootMechanism, int lifespan, int dominantDustType)
+        {
+            MechanismType = mechanismType;
+            Gravity = gravity;
+            Corporeal = corporeal;
+            CollisionBehavior = collisionBehavior;
+            CollisionLimit = collisionLimit;
+            CascadeMechanisms = cascadeMechanisms;
+            Effects = effects;
+            Target = target;
+            Seeking = seeking;
+            Count = count;
+            Repeat = repeat;
+            RepeatDelay = repeatDelay;
+            Spread = spread;
+            Speed = speed;
+            Scale = scale;
+            ChargeTime = chargeTime;
+            CascadeDelay = cascadeDelay;
+            EffectDelay = effectDelay;
+            Cooldown = cooldown;
+            IsRootMechanism = isRootMechanism;
+            Lifespan = lifespan;
+            DominantDustType = dominantDustType;
+        }
+
+        private static DeliveryMechanism Load(TagCompound tag)
+        {
+            return new DeliveryMechanism(
+                tag.Get<DeliveryMechanismType>(Constants.NbtNames.DeliveryMechanism.MECHANISM_TYPE),
+                (Gravity)tag.GetInt(Constants.NbtNames.DeliveryMechanism.GRAVITY),
+                (Corporeal)tag.GetInt(Constants.NbtNames.DeliveryMechanism.CORPOREAL),
+                (CollisionBehavior)tag.GetInt(Constants.NbtNames.DeliveryMechanism.COLLISION_BEHAVIOR),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.COLLISION_LIMIT),
+                tag.Get<List<DeliveryMechanism>>(Constants.NbtNames.DeliveryMechanism.CASCADE_MECHANISMS),
+                tag.Get<List<ArcaneEffect>>(Constants.NbtNames.DeliveryMechanism.EFFECTS),
+                (Target)tag.GetInt(Constants.NbtNames.DeliveryMechanism.TARGET),
+                (Seeking)tag.GetInt(Constants.NbtNames.DeliveryMechanism.SEEKING),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.COUNT),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.REPEAT),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.REPEAT_DELAY),
+                tag.GetFloat(Constants.NbtNames.DeliveryMechanism.SPREAD),
+                tag.GetFloat(Constants.NbtNames.DeliveryMechanism.SPEED),
+                tag.GetFloat(Constants.NbtNames.DeliveryMechanism.SCALE),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.CHARGE_TIME),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.CASCADE_DELAY),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.EFFECT_DELAY),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.COOLDOWN),
+                tag.GetBool(Constants.NbtNames.DeliveryMechanism.IS_ROOT_MECHANISM),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.LIFESPAN),
+                tag.GetInt(Constants.NbtNames.DeliveryMechanism.DOMINANT_DUST_TYPE)
+            );
+        }
+
+        public TagCompound SerializeData()
+        {
+            TagCompound tag = new TagCompound()
+            {
+                [Constants.NbtNames.DeliveryMechanism.MECHANISM_TYPE] = MechanismType,
+                [Constants.NbtNames.DeliveryMechanism.GRAVITY] = Gravity,
+                [Constants.NbtNames.DeliveryMechanism.CORPOREAL] = Corporeal,
+                [Constants.NbtNames.DeliveryMechanism.COLLISION_BEHAVIOR] = CollisionBehavior,
+                [Constants.NbtNames.DeliveryMechanism.COLLISION_LIMIT] = CollisionLimit,
+                [Constants.NbtNames.DeliveryMechanism.CASCADE_MECHANISMS] = CascadeMechanisms,
+                [Constants.NbtNames.DeliveryMechanism.EFFECTS] = Effects,
+                [Constants.NbtNames.DeliveryMechanism.TARGET] = Target,
+                [Constants.NbtNames.DeliveryMechanism.SEEKING] = Seeking,
+                [Constants.NbtNames.DeliveryMechanism.COUNT] = Count,
+                [Constants.NbtNames.DeliveryMechanism.REPEAT] = Repeat,
+                [Constants.NbtNames.DeliveryMechanism.REPEAT_DELAY] = RepeatDelay,
+                [Constants.NbtNames.DeliveryMechanism.SPREAD] = Spread,
+                [Constants.NbtNames.DeliveryMechanism.SPEED] = Speed,
+                [Constants.NbtNames.DeliveryMechanism.SCALE] = Scale,
+                [Constants.NbtNames.DeliveryMechanism.CHARGE_TIME] = ChargeTime,
+                [Constants.NbtNames.DeliveryMechanism.CASCADE_DELAY] = CascadeDelay,
+                [Constants.NbtNames.DeliveryMechanism.EFFECT_DELAY] = EffectDelay,
+                [Constants.NbtNames.DeliveryMechanism.COOLDOWN] = Cooldown,
+                [Constants.NbtNames.DeliveryMechanism.IS_ROOT_MECHANISM] = IsRootMechanism,
+                [Constants.NbtNames.DeliveryMechanism.LIFESPAN] = Lifespan,
+                [Constants.NbtNames.DeliveryMechanism.DOMINANT_DUST_TYPE] = DominantDustType
+            };
+
+            return tag;
+        }
+
+        /// <summary>
+        ///     Helper method of a mechanism returns the strongest weight of all its effects elements to determine visualization.
+        /// </summary>
+        public IElement GetDominantElement()
+        {
+            return Effects
+                .SelectMany(e => e.Elements)
+                .GroupBy(e => e.Key)
+                .Select(g => new ElementWeight(g.Key, g.Sum(e => e.Value)))
+                .OrderByDescending(e => e.Weight)
+                .FirstOrDefault()?.Element;
         }
 
         /// <summary>
@@ -134,18 +239,5 @@ namespace Arcana.Spells
         ///     The dust/visual representation of the mechanism, this is determined using the most powerful effect in the effect list.
         /// </summary>
         public int DominantDustType { get; set; }
-
-        /// <summary>
-        ///     Helper method of a mechanism returns the strongest weight of all its effects elements to determine visualization.
-        /// </summary>
-        public IElement GetDominantElement()
-        {
-            return Effects
-                .SelectMany(e => e.Elements)
-                .GroupBy(e => e.Key)
-                .Select(g => new ElementWeight(g.Key, g.Sum(e => e.Value)))
-                .OrderByDescending(e => e.Weight)
-                .FirstOrDefault()?.Element;
-        }
     }
 }

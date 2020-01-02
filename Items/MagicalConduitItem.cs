@@ -1,9 +1,12 @@
-﻿using Arcana.Reference;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Arcana.Reference;
 using Arcana.Spells;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using WebmilioCommons.Items.Standard;
 
 namespace Arcana.Items
@@ -19,10 +22,16 @@ namespace Arcana.Items
             Item refItem = new Item();
             refItem.netDefaults(REFERENCE_ITEM_ID);
             return refItem;
-        } 
+        }
+
+        /// <summary>
+        ///     The delivery mechanism(s) this conduit fires when used, determines what the conduit does.
+        /// </summary>
+        private List<DeliveryMechanism> RootMechanisms;
 
         public MagicalConduitItem() : this(Constants.Items.MAGICAL_CONDUIT, Constants.ItemDescriptions.MAGICAL_CONDUIT, _referenceItem)
         {
+            RootMechanisms = new List<DeliveryMechanism>();
         }
 
         public MagicalConduitItem(string displayName, string tooltip, Entity terrariaItemUsedAsConduit) : base(displayName, tooltip, terrariaItemUsedAsConduit.width, terrariaItemUsedAsConduit.height, 0, 0, -12, 1)
@@ -40,7 +49,12 @@ namespace Arcana.Items
             item.autoReuse = false;
         }
 
-        public override string Texture => $"{Constants.TERRARIA_ITEM_PREFIX}{REFERENCE_ITEM_ID}";
+        public override void HoldItem(Player player)
+        {
+            player.itemRotation = 0f;
+            player.itemLocation.Y = player.Center.Y;
+            player.itemLocation.X = player.Center.X - 18 * player.direction;
+        }
 
         public override void AddRecipes()
         {
@@ -65,6 +79,20 @@ namespace Arcana.Items
             ArcanaWorld world = ModContent.GetInstance<ArcanaWorld>();
             world.AddArcaneEvent(arcaneEvent);
             return base.UseItem(player);
+        }
+
+        public override string Texture => $"{Constants.TERRARIA_ITEM_PREFIX}{REFERENCE_ITEM_ID}";
+
+        public override TagCompound Save()
+        {
+            TagCompound saveData = new TagCompound {{"rootMechanisms", RootMechanisms}};
+            return saveData;
+        }
+
+        public override void Load(TagCompound tag)
+        {
+            this.RootMechanisms = tag.GetList<DeliveryMechanism>("rootMechanisms").ToList();
+
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Arcana.Enums.DeliveryMechanism;
+using Arcana.Reference;
 using Arcana.Spells.Elements;
+using Terraria.ModLoader.IO;
 
 namespace Arcana.Spells
 {
@@ -8,14 +12,67 @@ namespace Arcana.Spells
     ///     Class representing what happens when a delivery mechanism "resolves", carrying out its effect (this) on its target.
     ///     Effects are what actually happens to the target rather than how they get there.
     /// </summary>
-    public class ArcaneEffect
+    public class ArcaneEffect : TagSerializable
     {
         public ArcaneEffect()
         {
-            Elements = new Dictionary<IElement, float>();
+            Elements = new Dictionary<Element, float>();
             BaseCosts = new List<PrimalCost>();
             Costs = new List<PrimalCost>();
         }
+
+        public ArcaneEffect(int power, int duration, float primalRatio, float corruptRatio, Effect effect,
+            Dictionary<Element, float> elements, List<PrimalCost> baseCosts, List<PrimalCost> costs)
+        {
+            Power = power;
+            Duration = duration;
+            PrimalRatio = primalRatio;
+            CorruptRatio = corruptRatio;
+            Effect = effect;
+            Elements = elements;
+            BaseCosts = baseCosts;
+            Costs = costs;
+        }
+
+        public TagCompound SerializeData()
+        {
+            return new TagCompound()
+            {
+                [Constants.NbtNames.ArcaneEffect.POWER] = Power ,
+                [Constants.NbtNames.ArcaneEffect.DURATION] = Duration ,
+                [Constants.NbtNames.ArcaneEffect.PRIMAL_RATIO] = PrimalRatio ,
+                [Constants.NbtNames.ArcaneEffect.CORRUPT_RATIO] = CorruptRatio ,
+                [Constants.NbtNames.ArcaneEffect.EFFECT_TYPE] = (int)Effect ,
+                [Constants.NbtNames.ArcaneEffect.ELEMENT_KEYS] = Elements.Keys.ToList() ,
+                [Constants.NbtNames.ArcaneEffect.ELEMENT_VALUES] = Elements.Values.ToList() ,
+                [Constants.NbtNames.ArcaneEffect.BASE_COSTS] = BaseCosts ,
+                [Constants.NbtNames.ArcaneEffect.COSTS] = Costs
+            };
+        }
+
+        public static readonly Func<TagCompound, ArcaneEffect> DESERIALIZER = Load;
+
+        public static ArcaneEffect Load(TagCompound tag)
+        {
+            List<Element> elementKeys = tag.Get<List<Element>>(Constants.NbtNames.ArcaneEffect.ELEMENT_KEYS);
+            List<float> elementValues = tag.Get<List<float>>(Constants.NbtNames.ArcaneEffect.ELEMENT_VALUES);
+            Dictionary<Element, float> elementWeights = elementKeys
+                .Zip(elementValues, (k, v) => new { Key = k, Value = v }).ToDictionary(x => x.Key, x => x.Value);
+            return new ArcaneEffect(
+                tag.GetInt(Constants.NbtNames.ArcaneEffect.POWER),
+                tag.GetInt(Constants.NbtNames.ArcaneEffect.DURATION),
+                tag.GetFloat(Constants.NbtNames.ArcaneEffect.PRIMAL_RATIO),
+                tag.GetFloat(Constants.NbtNames.ArcaneEffect.CORRUPT_RATIO),
+                (Effect)tag.GetInt(Constants.NbtNames.ArcaneEffect.EFFECT_TYPE),
+                elementWeights,
+                tag.Get<List<PrimalCost>>(Constants.NbtNames.ArcaneEffect.BASE_COSTS),
+                tag.Get<List<PrimalCost>>(Constants.NbtNames.ArcaneEffect.COSTS));
+        }
+
+        /// <summary>
+        ///     Whether the effect is an over time effect. This is an expression bodied member that simply returns whether the duration is greater than 0.
+        /// </summary>
+        public bool IsTemporal => Duration > 0;
 
         /// <summary>
         ///     The magnitude of the effect, whatever it is. If this is a temporal spell (has a duration) then the Power is divided equally into each tick.
@@ -40,11 +97,6 @@ namespace Arcana.Spells
         public float CorruptRatio { get; set; }
 
         /// <summary>
-        ///     Whether the effect is an over time effect. This is an expression bodied member that simply returns whether the duration is greater than 0.
-        /// </summary>
-        public bool IsTemporal => Duration > 0;
-
-        /// <summary>
         ///     The most important part, this is what the arcane effect does when it resolves. This also helps determines its cost as a function of its elements.
         /// </summary>
         public Effect Effect { get; set; }
@@ -52,7 +104,7 @@ namespace Arcana.Spells
         /// <summary>
         ///     The elements the effect contains as a dictionary of their ratio to the overall effect. This is used to determine scaling, the nature of the effect itself, and cost.
         /// </summary>
-        public Dictionary<IElement, float> Elements { get; set; }
+        public Dictionary<Element, float> Elements { get; set; }
 
         /// <summary>
         ///     The base cost of casting the effect as a function of its elements, its type, before its modifiers are applied.

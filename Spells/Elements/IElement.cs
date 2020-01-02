@@ -5,6 +5,6 @@ namespace Arcana.Spells.Elements
 {
     public interface IElement : IHasUnlocalizedName
     {
-        string GetDustName();
+        string GetSmallDustName();
     }
 }

@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Arcana.Dusts
 {
-    public class EarthDust : BaseDust
+    public class WaterDustSmall : BaseDust
     {
     }
 }

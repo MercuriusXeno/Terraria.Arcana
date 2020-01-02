@@ -131,7 +131,7 @@ namespace Arcana.Spells
 
         public string GetDustNameFromDominantElement()
         {
-            return Mechanism.GetDominantElement().GetDustName();
+            return Mechanism.GetDominantElement().GetSmallDustName();
         }
     }
 }
