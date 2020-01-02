@@ -1,4 +1,6 @@
-﻿using Arcana.Reference;
+﻿using System;
+using Arcana.Reference;
+using Terraria.ModLoader.IO;
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
@@ -7,6 +9,8 @@ namespace Arcana.Spells.DeliveryMechanisms
         public Ray() : base(Constants.DeliveryMechanisms.RAY)
         {
         }
+
+        public static readonly Func<TagCompound, Ray> DESERIALIZER = Load<Ray>;
 
 
         public override void HandleDrawing(ArcaneEvent arcaneEvent)

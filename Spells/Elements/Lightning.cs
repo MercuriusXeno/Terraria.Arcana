@@ -1,4 +1,6 @@
-﻿using Arcana.Reference;
+﻿using System;
+using Terraria.ModLoader.IO;
+using Arcana.Reference;
 
 namespace Arcana.Spells.Elements
 {
@@ -7,5 +9,7 @@ namespace Arcana.Spells.Elements
         public Lightning() : base(Constants.Elements.LIGHTNING)
         {
         }
+
+        public static readonly Func<TagCompound, Lightning> DESERIALIZER = Load<Lightning>;
     }
 }

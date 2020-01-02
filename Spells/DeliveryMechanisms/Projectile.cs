@@ -1,7 +1,9 @@
-﻿using Arcana.Enums.DeliveryMechanism;
+﻿using System;
+using Arcana.Enums.DeliveryMechanism;
 using Arcana.Reference;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
@@ -11,6 +13,7 @@ namespace Arcana.Spells.DeliveryMechanisms
         {
         }
 
+        public static readonly Func<TagCompound, Projectile> DESERIALIZER = Load<Projectile>;
 
         public override void HandleDrawing(ArcaneEvent arcaneEvent)
         {

@@ -1,4 +1,6 @@
-﻿using Arcana.Reference;
+﻿using System;
+using Arcana.Reference;
+using Terraria.ModLoader.IO;
 
 namespace Arcana.Spells.DeliveryMechanisms
 {
@@ -7,6 +9,8 @@ namespace Arcana.Spells.DeliveryMechanisms
         public Pulse() : base(Constants.DeliveryMechanisms.PULSE)
         {
         }
+
+        public static readonly Func<TagCompound, Pulse> DESERIALIZER = Load<Pulse>;
 
 
         public override void HandleDrawing(ArcaneEvent arcaneEvent)

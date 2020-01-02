@@ -22,12 +22,11 @@ namespace Arcana.Spells.DeliveryMechanisms
             return new TagCompound() { [Constants.NbtNames.Common.UNLOCALIZED_NAME] = UnlocalizedName };
         }
 
-        public static readonly Func<TagCompound, DeliveryMechanismType> DESERIALIZER = Load;
+        public static readonly Func<TagCompound, DeliveryMechanismType> DESERIALIZER = Load<DeliveryMechanismType>;
 
-        public static DeliveryMechanismType Load(TagCompound tag)
+        public static T Load<T>(TagCompound tag) where T : DeliveryMechanismType
         {
-            return DeliveryMechanismTypeLoader.Instance.GetGeneric(
-                tag.GetString(Constants.NbtNames.Common.UNLOCALIZED_NAME));
+            return DeliveryMechanismTypeLoader.Instance.GetGeneric<T>();
         }
     }
 }

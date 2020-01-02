@@ -23,11 +23,11 @@ namespace Arcana.Spells.Elements
             return new TagCompound() { [Constants.NbtNames.Common.UNLOCALIZED_NAME] = UnlocalizedName };
         }
 
-        public static readonly Func<TagCompound, Element> DESERIALIZER = Load;
+        public static readonly Func<TagCompound, Element> DESERIALIZER = Load<Element>;
 
-        public static Element Load(TagCompound tag)
+        public static T Load<T>(TagCompound tag) where T : Element
         {
-            return ElementLoader.Instance.GetGeneric(tag.GetString(Constants.NbtNames.Common.UNLOCALIZED_NAME));
+            return ElementLoader.Instance.GetGeneric<T>();
         }
     }
 }

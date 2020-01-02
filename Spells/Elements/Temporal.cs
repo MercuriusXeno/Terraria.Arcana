@@ -1,4 +1,6 @@
-﻿using Arcana.Reference;
+﻿using System;
+using Terraria.ModLoader.IO;
+using Arcana.Reference;
 
 namespace Arcana.Spells.Elements
 {
@@ -7,5 +9,7 @@ namespace Arcana.Spells.Elements
         public Temporal() : base(Constants.Elements.TEMPORAL)
         {
         }
+
+        public static readonly Func<TagCompound, Temporal> DESERIALIZER = Load<Temporal>;
     }
 }

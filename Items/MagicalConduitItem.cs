@@ -72,12 +72,21 @@ namespace Arcana.Items
 
         public override bool UseItem(Player player)
         {
-            DeliveryMechanism deliveryMechanism = DebugPrefab.BasicFireProjectile;
-            Vector2 bearing = (Main.MouseWorld - player.Center);
-            bearing.Normalize();
-            ArcaneEvent arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, bearing);
-            ArcanaWorld world = ModContent.GetInstance<ArcanaWorld>();
-            world.AddArcaneEvent(arcaneEvent);
+            if (!RootMechanisms.Any())
+            {
+                Main.NewText("Added prefab for debugging");
+                RootMechanisms.Add(DebugPrefab.BasicFireProjectile);
+            }
+
+            foreach (DeliveryMechanism deliveryMechanism in RootMechanisms)
+            {
+                Vector2 bearing = (Main.MouseWorld - player.Center);
+                bearing.Normalize();
+                ArcaneEvent arcaneEvent = new ArcaneEvent(deliveryMechanism, player.Center, bearing);
+                ArcanaWorld world = ModContent.GetInstance<ArcanaWorld>();
+                world.AddArcaneEvent(arcaneEvent);
+            }
+
             return base.UseItem(player);
         }
 
@@ -91,7 +100,7 @@ namespace Arcana.Items
 
         public override void Load(TagCompound tag)
         {
-            this.RootMechanisms = tag.GetList<DeliveryMechanism>("rootMechanisms").ToList();
+            RootMechanisms = tag.GetList<DeliveryMechanism>("rootMechanisms").ToList();
 
         }
     }
